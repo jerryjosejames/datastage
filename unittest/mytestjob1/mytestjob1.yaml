@@ -1,0 +1,12 @@
+---
+given: []
+when:
+  job: "mytestjob1"
+  controller: null
+  parameters: {}
+then:
+- stage: "SeqFile_Name"
+  link: "frm_cpy_stg"
+  path: "SeqFile_Name-frm_cpy_stg.csv"
+  cluster: null
+  ignore: null
