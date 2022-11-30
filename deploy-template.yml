@@ -26,7 +26,7 @@ parameters:
   default: false
 
 jobs:
-  - deployment: Deploy_${{ parameters.EnvironmentID }}
+  - deployment: ${{ parameters.EnvironmentID }}
     displayName: Deploy to ${{ parameters.EnvironmentName }}
     pool: 'default'
     environment: ${{ parameters.EnvironmentName }}
