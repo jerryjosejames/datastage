@@ -8,7 +8,7 @@ parameters:
 - name: EnvironmentID
   default: 'ci'
 - name: EnvironmentName
-  default: 'Continuous Integration'
+  default: ''
 - name: DatastageProject
   default: 'dstage1_ci'
 - name: ProjectCacheDir
