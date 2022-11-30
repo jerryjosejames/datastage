@@ -25,9 +25,6 @@ parameters:
   type: boolean
   default: false
   
-steps:
-- script: echo "hello"
-
 jobs:
   - deployment: Deploy_${{parameters.EnvironmentID}}
     displayName: Deploy to ${{parameters.EnvironmentName}}
