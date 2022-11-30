@@ -22,7 +22,7 @@ stages:
 #------------------------------------------------------------------------------
 - stage: Deploy_CI
   variables:
-    EnvironmentID: 'ci'
+    EnvironmentID: ci
     DatastageProject: $(ProjectName)_ci
     ServerName: rudest1.fyre.ibm.com
     DomainName: rudest1.fyre.ibm.com:9446
