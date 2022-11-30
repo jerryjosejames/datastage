@@ -26,6 +26,11 @@ parameters:
   default: false
 
 jobs:
+  parameters:
+    preBuild:
+    - script: echo hello from pre-build
+    preTest:
+    - script: echo hello from pre-test
   - deployment: Deploy_${{parameters.EnvironmentID}}
     displayName: Deploy to ${{parameters.EnvironmentName}}
     pool: 'default'
