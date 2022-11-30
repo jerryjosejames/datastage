@@ -1,0 +1,42 @@
+# MettleCI template pipeline for Azure DevOps
+
+trigger:
+- master
+
+pool:
+  #[AGENT_POOL]
+  default
+
+# These variables should be set in Azure DevOps, with the passwords kept secret:
+#  - IISUsername
+#  - IISPassword
+#  - MCIUsername
+#  - MCIPassword
+variables:
+  ProjectName: dstage1 # Name of DS project without environment suffix
+  MettleHome: /opt/dm/mci
+  ComplianceRepo: compliance # Name of compliance repo
+
+stages:
+
+#------------------------------------------------------------------------------
+- stage: Deploy_CI
+  variables:
+    EnvironmentID: ci
+    DatastageProject: $(ProjectName)_ci
+    ServerName: rudest1.fyre.ibm.com
+    DomainName: rudest1.fyre.ibm.com:9446
+  jobs:
+  - template: deploy-template.yml
+    parameters:
+      DomainName: $(DomainName)
+      ServerName: $(ServerName)
+      EnvironmentID: $(EnvironmentID)
+      EnvironmentName: Continuous Integration
+      DatastageProject: $(DatastageProject)
+      ProjectCacheDir: C:\dm\mci\cache\$(ServerName)\$(DatastageProject)
+      IISUsername: $(IISUsername)
+      IISPassword: $(IISPassword)
+      MCIUsername: $(MCIUsername)
+      MCIPassword: $(MCIPassword)
+      PublishCompilationTests: true
