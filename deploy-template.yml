@@ -6,7 +6,7 @@ parameters:
 - name: ServerName
   default: ''
 - name: EnvironmentID
-  default: ''
+  default: 'ci'
 - name: EnvironmentName
   default: ''
 - name: DatastageProject
