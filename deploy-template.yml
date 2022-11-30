@@ -1,0 +1,65 @@
+# # Template for Deploy stage
+
+parameters:
+- name: DomainName
+  default: 'rudest1.fyre.ibm.com:9446'
+- name: ServerName
+  default: 'rudest1.fyre.ibm.com'
+- name: EnvironmentID
+  default: 'ci'
+- name: EnvironmentName
+  default: 'ci'
+- name: DatastageProject
+  default: 'dstage1_ci'
+- name: ProjectCacheDir
+  default: '/opt/IBM/InformationServer/Server/Projects/dstage1_ci'
+- name: IISUsername
+  default: 'isadmin'
+- name: IISPassword
+  default: 'isadmin'
+- name: MCIUsername
+  default: 'isadmin'
+- name: MCIPassword
+  default: 'isadmin'
+- name: PublishCompilationTests
+  type: boolean
+  default: false
+
+jobs:
+  - deployment: Deploy_${{ parameters.EnvironmentID }}
+    displayName: Deploy to ${{ parameters.EnvironmentName }}
+    pool: 'AWS DataStage Agents'
+    environment: ${{ parameters.EnvironmentName }}
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - checkout: self
+          - script:
+              mettleci datastage create-project -domain ${{ parameters.DomainName }} -username ${{ parameters.IISUsername }} -password ${{ parameters.IISPassword }} -server ${{ parameters.ServerName }} -project ${{ parameters.DatastageProject }}
+            displayName: 'Create Project'
+          - script:
+              mettleci properties config -baseDir datastage -filePattern "*.sh" -filePattern "DSParams" -filePattern "Parameter Sets/*/*" -properties var.${{ parameters.EnvironmentID }} -outDir config
+            displayName: 'Configure Properties'
+          - script:
+              mettleci remote upload -host ${{ parameters.ServerName }} -source "." -destination ${{ parameters.DatastageProject }} -transferPattern "filesystem/**/*,config/*" -username ${{ parameters.MCIUsername }} -password ${{ parameters.MCIPassword }}
+            displayName: 'Upload config files'
+          - script:
+              mettleci remote execute -host ${{ parameters.ServerName }} -username ${{ parameters.MCIUsername }} -password ${{ parameters.MCIPassword }} -script config/deploy.sh
+            displayName: 'Execute deploy script'
+          - script:
+              mettleci datastage deploy -domain ${{ parameters.DomainName }} -server ${{ parameters.ServerName }} -username ${{ parameters.IISUsername }} -password ${{ parameters.IISPassword }} -project ${{ parameters.DatastageProject }} -project-cache ${{ parameters.ProjectCacheDir }} -assets $(System.DefaultWorkingDirectory)\datastage -threads 8 -include-job-in-test-name
+            displayName: 'Deploy DataStage assets'
+          - script:
+              mettleci remote execute -host ${{ parameters.ServerName }} -username ${{ parameters.MCIUsername }} -password ${{ parameters.MCIPassword }} -script config/cleanup.sh
+            displayName: 'Cleanup'
+          - ${{ if eq(parameters.publishCompilationTests, true) }}:
+            - task: PublishTestResults@2
+              condition: always()
+              inputs:
+                testRunTitle: 'DataStage Compilation'
+                testRunner: 'JUnit'
+                testResultsFiles: 'log/**/mettleci_compilation.xml'
+                searchFolder: $(System.DefaultWorkingDirectory)
+                failTaskOnFailedTests: true
+              displayName: 'Publish compilation results'
