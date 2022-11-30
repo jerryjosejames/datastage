@@ -32,7 +32,7 @@ stages:
       DomainName: $(DomainName)
       ServerName: $(ServerName)
       EnvironmentID: $(EnvironmentID)
-      EnvironmentName: Continuous Integration
+      EnvironmentName: Continuous_Integration
       DatastageProject: $(DatastageProject)
       ProjectCacheDir: C:\dm\mci\cache\$(ServerName)\$(DatastageProject)
       IISUsername: $(IISUsername)
