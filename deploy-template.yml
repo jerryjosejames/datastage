@@ -24,9 +24,11 @@ parameters:
 - name: PublishCompilationTests
   type: boolean
   default: false
+  
+steps:
+- script: echo "hello"
 
 jobs:
-  parameters:
     preBuild:
     - script: echo hello from pre-build
     preTest:
