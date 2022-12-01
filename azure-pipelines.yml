@@ -13,7 +13,7 @@ pool:
 #  - MCIUsername
 #  - MCIPassword
 variables:
-  ProjectName: dstage1 # Name of DS project without environment suffix
+  ProjectName: dstage10 # Name of DS project without environment suffix
   MettleHome: /opt/dm/mci
   ComplianceRepo: compliance # Name of compliance repo
 
