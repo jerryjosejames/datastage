@@ -24,8 +24,8 @@ stages:
   variables:
     EnvironmentID: ci
     DatastageProject: $(ProjectName)_ci
-    ServerName: rudest1.fyre.ibm.com
-    DomainName: rudest1.fyre.ibm.com:9446
+    ServerName: gummosis1.fyre.ibm.com
+    DomainName: gummosis1.fyre.ibm.com:9443
   jobs:
   - template: deploy-template.yml
     parameters:
