@@ -38,7 +38,9 @@ jobs:
           - checkout: self
           #- script: export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin:/opt/IBM/InformationServer/Server/DSEngine/bin
           #  displayName: 'Export PATH'
-          - script: source /opt/IBM/InformationServer/Server/DSEngine/dsenv
+          - script: source /opt/IBM/InformationServer/Server/DSEngine/dsenv 
+                    whoami
+                    hostname
             displayName: 'Source dsenv file'
           - script:
               mettleci datastage create-project -domain ${{ parameters.DomainName }} -username ${{ parameters.IISUsername }} -password ${{ parameters.IISPassword }} -server ${{ parameters.ServerName }} -project ${{ parameters.DatastageProject }}
