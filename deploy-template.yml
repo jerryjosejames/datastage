@@ -39,15 +39,15 @@ jobs:
           - checkout: self
           #- script: export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin:/opt/IBM/InformationServer/Server/DSEngine/bin
           #  displayName: 'Export PATH'
-          - script: source /opt/IBM/InformationServer/Server/DSEngine/dsenv 
-            displayName: 'source env'  
-          - script: whoami
-            displayName: 'user name'
-          - script: hostname
-            displayName: 'host name'
-          - script:
-              mettleci datastage create-project -domain ${{ parameters.DomainName }} -username ${{ parameters.IISUsername }} -password ${{ parameters.IISPassword }} -server ${{ parameters.ServerName }} -project ${{ parameters.DatastageProject }}
-            displayName: 'Create Project'
+          #- script: source /opt/IBM/InformationServer/Server/DSEngine/dsenv 
+          #  displayName: 'source env'  
+          #- script: whoami
+          #  displayName: 'user name'
+          #- script: hostname
+          #  displayName: 'host name'
+          #- script:
+          #    mettleci datastage create-project -domain ${{ parameters.DomainName }} -username ${{ parameters.IISUsername }} -password ${{ parameters.IISPassword }} -server ${{ parameters.ServerName }} -project ${{ parameters.DatastageProject }}
+          #  displayName: 'Create Project'
           - script:
               mettleci properties config -baseDir datastage -filePattern "*.sh" -filePattern "DSParams" -filePattern "Parameter Sets/*/*" -properties var.${{ parameters.EnvironmentID }} -outDir config
             displayName: 'Configure Properties'
