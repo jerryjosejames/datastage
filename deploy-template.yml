@@ -53,7 +53,7 @@ jobs:
               mettleci properties config -baseDir datastage -filePattern "*.sh" -filePattern "DSParams" -filePattern "Parameter Sets/*/*" -properties var.${{ parameters.EnvironmentID }} -outDir config
             displayName: 'Configure Properties'
           - script:
-              mettleci remote upload -host ${{ parameters.ServerName }} -source "." -destination ${{ parameters.DatastageProject }} -transferPattern "filesystem/**/*,config/*" -username ${{ parameters.MCIUsername }} -password ${{ parameters.MCIPassword }}
+              mettleci remote upload -host ${{ parameters.ServerName }} -source "." -destination ${{ parameters.DatastageProject }} -transferPattern "filesystem/**/*,config/*,Jobs/*" -username ${{ parameters.MCIUsername }} -password ${{ parameters.MCIPassword }}
             displayName: 'Upload config files'
           - script:
               mettleci remote execute -host ${{ parameters.ServerName }} -username ${{ parameters.MCIUsername }} -password ${{ parameters.MCIPassword }} -script config/deploy.sh
