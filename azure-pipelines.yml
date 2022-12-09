@@ -34,7 +34,7 @@ stages:
       EnvironmentID: $(EnvironmentID)
       EnvironmentName: Continuous_Integration
       DatastageProject: $(DatastageProject)
-      ProjectCacheDir: C:\dm\mci\cache\$(ServerName)\$(DatastageProject)
+      ProjectCacheDir: C:\MettleCI\cache\$(ServerName)\$(DatastageProject)
       IISUsername: $(IISUsername)
       IISPassword: $(IISPassword)
       MCIUsername: $(MCIUsername)
