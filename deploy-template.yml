@@ -37,6 +37,7 @@ jobs:
         deploy:
           steps:
           - checkout: self
+          #commenting
           #- script: export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin:/opt/IBM/InformationServer/Server/DSEngine/bin
           #  displayName: 'Export PATH'
           #- script: source /opt/IBM/InformationServer/Server/DSEngine/dsenv 
